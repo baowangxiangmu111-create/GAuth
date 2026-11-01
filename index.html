@@ -3,38 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GAuth · 浏览器两步验证器</title>
+<title>GAuth · 浏览器两步验证器 · Two-factor authenticator</title>
 <meta name="description" content="GAuth is a two-factor authenticator in your browser's side panel: TOTP/HOTP codes, groups, imports, encrypted Google Drive backup and autofill.">
 <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="style.css">
+<script src="lang.js" defer></script>
 </head>
 <body>
 <main>
-  <header><img src="logo.png" alt=""><a href="./">GAuth</a><nav><a href="privacy.html">隐私权政策 Privacy</a></nav></header>
+  <header>
+    <img src="logo.png" alt=""><a href="./" data-keep="./">GAuth</a>
+    <nav class="langs" aria-label="Language">
+      <a href="?lang=zh-CN" data-set="zh-CN" hreflang="zh-CN">中文</a>
+      <a href="?lang=en" data-set="en" hreflang="en">English</a>
+      <a href="?lang=fr" data-set="fr" hreflang="fr">Français</a>
+    </nav>
+  </header>
 
-  <h1>浏览器侧边栏里的两步验证器</h1>
-  <p class="lead">GAuth 为开启了两步验证的网站生成 6 位验证码（TOTP / HOTP），不需要手机。</p>
+  <article data-lang="zh-CN" lang="zh-CN" data-title="GAuth · 浏览器两步验证器">
+    <h1>浏览器侧边栏里的两步验证器</h1>
+    <p class="lead">GAuth 为开启了两步验证的网站生成 6 位验证码（TOTP / HOTP），不需要手机。</p>
+    <section class="card">
+      <h2>功能</h2>
+      <ul>
+        <li>按分组标签管理账号，置顶、搜索、按发行方自动分组</li>
+        <li>多种导入：网页二维码、二维码图片、摄像头、otpauth 链接、Google Authenticator 迁移码、Aegis / 2FAS / andOTP / Bitwarden / FreeOTP+ 备份文件</li>
+        <li>导出：加密备份文件、Google Authenticator 迁移二维码</li>
+        <li>可选的 Google 云端硬盘备份：备份先用你自己设置的口令在本机加密，云端只存密文</li>
+        <li>在网页的验证码输入框自动填入验证码，填完自动回车</li>
+        <li>可选的解锁口令，电脑锁屏或无操作时自动锁定</li>
+        <li>中文、English、Français 界面，浅色 / 深色主题</li>
+      </ul>
+      <p><a href="privacy.html" data-keep="privacy.html">隐私权政策</a></p>
+    </section>
+  </article>
 
-  <section class="card">
-    <h2>功能</h2>
-    <ul>
-      <li>按分组标签管理账号，置顶、搜索、按发行方自动分组</li>
-      <li>多种导入：网页二维码、二维码图片、摄像头、otpauth 链接、Google Authenticator 迁移码、Aegis / 2FAS / andOTP / Bitwarden / FreeOTP+ 备份文件</li>
-      <li>导出：加密备份文件、Google Authenticator 迁移二维码</li>
-      <li>可选的 Google 云端硬盘备份：备份先用你自己设置的口令在本机加密，云端只存密文</li>
-      <li>在网页的验证码输入框自动填入验证码</li>
-      <li>可选的解锁口令与自动锁定</li>
-    </ul>
-  </section>
+  <article data-lang="en" lang="en" data-title="GAuth · Two-factor authenticator in your browser">
+    <h1>A two-factor authenticator in your browser's side panel</h1>
+    <p class="lead">GAuth generates 6-digit codes (TOTP / HOTP) for sites with two-step verification, no phone needed.</p>
+    <section class="card">
+      <h2>Features</h2>
+      <ul>
+        <li>Group tabs, pinning, search and automatic grouping by issuer</li>
+        <li>Import from a QR code on the page, QR images, the camera, otpauth links, Google Authenticator export codes, and Aegis / 2FAS / andOTP / Bitwarden / FreeOTP+ backups</li>
+        <li>Export as an encrypted backup file or Google Authenticator transfer QR codes</li>
+        <li>Optional Google Drive backup: encrypted on your device with your own passphrase, only ciphertext is uploaded</li>
+        <li>Fills codes into verification fields on web pages and presses Enter for you</li>
+        <li>Optional unlock passcode; locks when your computer locks or after inactivity</li>
+        <li>Chinese, English and French interface; light and dark themes</li>
+      </ul>
+      <p>GAuth requests only the <code>drive.file</code> scope, so it can access only the files it creates itself (a folder named “GAuth 备份”). GAuth has no servers of its own.</p>
+      <p><a href="privacy.html" data-keep="privacy.html">Privacy Policy</a></p>
+    </section>
+  </article>
 
-  <section class="card" lang="en">
-    <h2>About (English)</h2>
-    <p>GAuth is a browser extension that generates time-based and counter-based one-time passwords (TOTP/HOTP) in the browser side panel. It organizes accounts into groups, imports from QR codes, otpauth links, Google Authenticator export codes and backups of other authenticator apps, and can fill codes into verification fields on web pages.</p>
-    <p>Optionally, you can back up your accounts to your own Google Drive. GAuth requests only the <code>drive.file</code> scope, so it can access only the files it creates itself (a folder named “GAuth 备份”). Backups are encrypted on your device with a passphrase you choose before they are uploaded. GAuth has no servers of its own.</p>
-    <p>See the <a href="privacy.html">Privacy Policy</a>.</p>
-  </section>
+  <article data-lang="fr" lang="fr" data-title="GAuth · Authentificateur à deux facteurs dans votre navigateur">
+    <h1>Un authentificateur à deux facteurs dans le panneau latéral</h1>
+    <p class="lead">GAuth génère les codes à 6 chiffres (TOTP / HOTP) des sites protégés par la validation en deux étapes, sans téléphone.</p>
+    <section class="card">
+      <h2>Fonctionnalités</h2>
+      <ul>
+        <li>Onglets de groupes, épinglage, recherche et regroupement automatique par émetteur</li>
+        <li>Import depuis un code QR de la page, des images de codes QR, la caméra, des liens otpauth, les codes d’exportation de Google Authenticator et les sauvegardes Aegis / 2FAS / andOTP / Bitwarden / FreeOTP+</li>
+        <li>Export en fichier de sauvegarde chiffré ou en codes QR de transfert Google Authenticator</li>
+        <li>Sauvegarde Google Drive facultative : chiffrée sur votre appareil avec votre propre phrase secrète, seul le texte chiffré est envoyé</li>
+        <li>Remplit les champs de code de vérification et appuie sur Entrée pour vous</li>
+        <li>Code de déverrouillage facultatif ; verrouillage quand l’ordinateur se verrouille ou après inactivité</li>
+        <li>Interface en chinois, anglais et français ; thèmes clair et sombre</li>
+      </ul>
+      <p>GAuth ne demande que l’autorisation <code>drive.file</code> : elle n’accède qu’aux fichiers qu’elle crée elle-même (un dossier nommé « GAuth 备份 »). GAuth n’a aucun serveur.</p>
+      <p><a href="privacy.html" data-keep="privacy.html">Politique de confidentialité</a></p>
+    </section>
+  </article>
 
-  <footer>GAuth · <a href="privacy.html">Privacy Policy</a></footer>
+  <footer>GAuth · <a href="privacy.html" data-keep="privacy.html">Privacy Policy</a></footer>
 </main>
 </body>
 </html>

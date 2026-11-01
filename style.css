@@ -17,3 +17,10 @@ p,li{max-width:68ch}
 section.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px 24px 20px;margin-top:28px}
 ul{padding-left:20px}
 footer{margin-top:56px;color:var(--muted);font-size:14px}
+nav.langs{gap:4px;flex-wrap:wrap}
+nav.langs a{padding:4px 10px;border-radius:6px;border:1px solid transparent}
+nav.langs a[aria-current]{color:var(--text);border-color:var(--border);background:var(--surface)}
+[hidden]{display:none!important}
+article+article{margin-top:56px}
+@media (max-width:520px){main{padding-top:32px}h1{font-size:30px}header{flex-wrap:wrap}nav.langs{margin-left:0;width:100%}}
+code{overflow-wrap:anywhere}
