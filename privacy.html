@@ -22,37 +22,39 @@
 
   <article data-lang="zh-CN" lang="zh-CN" data-title="隐私权政策 · GAuth">
     <h1>隐私权政策</h1>
-    <p class="lead">生效日期：2026 年 11 月 1 日</p>
+    <p class="lead">生效日期：2026 年 11 月 7 日</p>
 
     <section class="card">
       <h2>概述</h2>
-      <p>GAuth 是一个浏览器扩展，用于生成两步验证码。GAuth 没有自己的服务器，不收集、不出售、不向任何第三方分享你的数据，也不包含广告或统计分析代码。</p>
+      <p>GAuth 是一个浏览器扩展，用于在本机管理两步验证账号、生成验证码并在网页上填入验证码。它会为这些功能处理下述数据。GAuth 没有自己的数据收集服务器，开发者不会收到你的账号库、密钥或网页内容；扩展不出售用户数据，不包含广告或统计分析代码。用户启用云端备份后，加密备份会直接发送到用户自己的 Google 云端硬盘。</p>
 
       <h3>保存在你设备上的数据</h3>
       <ul>
-        <li>你添加的账号（发行方、账号名、两步验证密钥）、分组和设置，以加密形式保存在浏览器的扩展存储中。</li>
-        <li>如果你设置了解锁口令，密钥只在解锁期间保留在内存里。</li>
-        <li>这些数据只在你的设备上，卸载扩展即被删除。</li>
+        <li>你添加或导入的账号（发行方、账号名或邮箱、两步验证密钥、计数器、关联网站）、分组及账号偏好，以 AES-GCM 加密形式保存在本机账号库中。扩展界面设置单独保存在本机扩展存储中。</li>
+        <li>如果设置了解锁口令，口令用于保护库密钥，不以明文保存。解锁后的库密钥保存在浏览器会话存储中，锁定时移除该缓存。</li>
+        <li>卸载扩展或在扩展中清空数据，会删除本机扩展存储；你自行导出的文件及云端备份不会因此自动删除。</li>
       </ul>
 
       <h3>Google 账号与云端硬盘（可选）</h3>
-      <p>只有你主动点「连接 Google 账号」时，GAuth 才会请求唯一一项权限：</p>
+      <p>只有你主动选择连接 Google 账号时，GAuth 才会开始交互式授权。授权范围只有：</p>
       <ul>
         <li><code>https://www.googleapis.com/auth/drive.file</code>：只能访问 GAuth 自己创建的文件，即你云端硬盘中的「GAuth 备份」文件夹及其中的备份文件。GAuth 看不到你云端硬盘里的其他文件。</li>
       </ul>
-      <p>连接后，GAuth 会通过云端硬盘接口读取该账号的邮箱地址，仅用于在扩展界面里显示当前连接的是哪个账号。</p>
-      <p>备份在上传前，已用你自己设置的备份口令在本机加密（PBKDF2-SHA256 + AES-GCM）。云端硬盘里只有密文，GAuth 的开发者和 Google 都无法解开。访问令牌只保存在浏览器会话内存中，不会发送到 Google 以外的任何地方。</p>
+      <p>Google 登录页面处理 Google 账号登录。GAuth 获得 OAuth 访问令牌，并通过云端硬盘接口读取账号邮箱。邮箱保存在本机，用于显示当前连接账号及后续向 Google 发起授权请求；访问令牌保存在浏览器会话存储中，仅发送给 Google 授权与云盘服务。</p>
+      <p>你设置备份口令并使用手动或自动备份后，账号及分组（包括账号标签和关联网站）会先在本机用备份口令派生的密钥加密（PBKDF2-SHA256 + AES-GCM），再通过 HTTPS 上传。GAuth 不会把备份口令或解密密钥发送给 Google。云盘服务还会接收备份文件名、时间、账号数量及设备类型等元数据；这些元数据不属于加密的账号内容。</p>
       <p>你可以随时在扩展里「断开 Google」，或在 <a href="https://myaccount.google.com/permissions">Google 账号权限页面</a> 撤销 GAuth 的访问权限；云端的备份文件由你自行保留或删除。</p>
       <p>GAuth 对通过 Google API 获得的信息的使用和传输，遵守 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 服务用户数据政策</a>，包括其中的「有限使用」要求。</p>
+      <p>GAuth 仅为已披露的验证器功能及其安全保护使用用户数据，遵守 <a href="https://developer.chrome.com/docs/webstore/program-policies/user-data-faq">Chrome 网上应用店用户数据政策</a>及其有限使用要求。</p>
 
       <h3>网页自动填充</h3>
-      <p>为了在网页的验证码输入框里填入验证码，GAuth 会在你访问的网页上检测验证码输入框。它只把验证码交给网页，不会把密钥交给网页，也不会读取、记录或上传网页内容。填入后按回车提交是可以在设置里关闭的本机操作，不会产生任何额外的数据传输。</p>
+      <p>GAuth 读取当前标签页的 URL/域名，在本机匹配账号；在应用新授予的网站权限时，也会识别已打开的网页标签页以加载对应功能。在你授予网站访问权限或通过快捷键、右键菜单提供当前页临时访问权限后，会读取页面中识别验证码输入框所需的结构、标签和属性。它只把一次性验证码填入网页，不把完整两步验证密钥或解锁口令交给网页。若启用填入后自动提交，GAuth 会触发网站自身的表单提交，由该网站按其登录流程处理验证码；此选项可在设置关闭。</p>
+      <p>扩展不会读取浏览器的历史记录列表，也不会建立按时间排列的浏览记录。你确认的账号与网站关联会保存在加密账号库中，并可随账号进入加密云端备份。页面结构及截图不发送给开发者或云盘。</p>
+
+      <h3>自动锁定所用的活动信息</h3>
+      <p>为按无操作时间自动锁定，GAuth 会在你操作扩展界面时更新会话存储中的最后活动时间，并在启用相应设置时处理电脑锁屏状态。它不记录按键内容、逐次点击、滚动记录或鼠标轨迹，也不把这些活动信息发送给外部服务。</p>
 
       <h3>摄像头与屏幕截图</h3>
-      <p>只有你选择「用摄像头扫码」或「扫描当前网页的二维码」时，GAuth 才会使用摄像头画面或当前标签页截图来识别二维码。识别在本机完成，图像不会保存或上传。</p>
-
-      <h3>屏幕锁</h3>
-      <p>GAuth 会在电脑锁屏或长时间无操作时自动锁定自己。它只读取系统给出的「活动 / 空闲 / 已锁屏」状态，不记录也不上传这些信息。</p>
+      <p>只有你选择对应扫码功能时，GAuth 才会使用摄像头画面、你选择的二维码图片或当前标签页截图来识别二维码。识别在本机完成，图像不会持久保存或上传。识别出的账号和密钥经你确认导入后，按本政策所述的账号数据方式存储和备份。</p>
 
       <h3>政策变更与联系方式</h3>
       <p>如本政策有变更，会更新此页面并修改生效日期。如有疑问，请在 <a href="https://github.com/baowangxiangmu111-create/GAuth/issues">GitHub Issues</a> 提交。</p>
@@ -61,76 +63,70 @@
 
   <article data-lang="en" lang="en" data-title="Privacy Policy · GAuth">
     <h1>Privacy Policy</h1>
-    <p class="lead">Effective date: November 1, 2026</p>
+    <p class="lead">Effective date: November 7, 2026</p>
 
     <section class="card">
       <h2>Overview</h2>
-      <p>GAuth is a browser extension that generates two-factor authentication codes. GAuth has no servers of its own. It does not collect, sell or share your data with any third party, and it contains no advertising or analytics code.</p>
-
+      <p>GAuth processes the data described below to manage authenticator accounts, generate verification codes on your device and fill codes into web pages. GAuth has no data-collection server, and its developers do not receive your account vault, secrets or page content. GAuth does not sell user data and contains no advertising or analytics. When you enable cloud backup, encrypted backups are sent directly to your own Google Drive.</p>
       <h3>Data stored on your device</h3>
-      <ul>
-        <li>Accounts you add (issuer, account name, 2FA secret), groups and settings are stored encrypted in the browser's extension storage.</li>
-        <li>If you set an unlock passcode, secrets are kept in memory only while GAuth is unlocked.</li>
-        <li>This data stays on your device and is removed when you uninstall the extension.</li>
-      </ul>
-
+      <p>Accounts you add or import (issuer, account name or email, 2FA secret, counter and linked websites), groups and account preferences are stored in an AES-GCM encrypted vault on your device. Interface settings are stored separately in local extension storage. If you set an unlock passcode, it protects the vault key and is not stored as plaintext. The unlocked vault key is cached in browser session storage and that cache is removed when you lock GAuth.</p>
+      <p>Uninstalling GAuth or erasing its local data removes extension storage. Files you export and cloud backups are not automatically deleted.</p>
       <h3>Google account and Google Drive (optional)</h3>
-      <p>Only when you choose “Connect Google account” does GAuth request a single scope:</p>
+      <p>Interactive authorization begins only when you choose to connect your Google account. GAuth requests a single scope:</p>
       <ul>
-        <li><code>https://www.googleapis.com/auth/drive.file</code>: access only to files created by GAuth, namely the “GAuth 备份” folder in your Drive and the backup files in it. GAuth cannot see any other files in your Drive.</li>
+        <li><code>https://www.googleapis.com/auth/drive.file</code> — access only to files created by GAuth (the “GAuth 备份” folder and the backup files in it). GAuth cannot see any other files in your Drive.</li>
       </ul>
-      <p>After connecting, GAuth reads the account's email address through the Drive API, used only to show in the extension which account is connected.</p>
-      <p>Backups are encrypted on your device with a passphrase you choose (PBKDF2-SHA256 and AES-GCM) before upload. Only ciphertext is stored in your Drive; neither the GAuth developers nor Google can decrypt it. Access tokens are kept in browser session memory and are never sent anywhere other than Google.</p>
-      <p>You can disconnect at any time in GAuth, or revoke access on <a href="https://myaccount.google.com/permissions">your Google Account permissions page</a>. Backup files in your Drive are yours to keep or delete.</p>
+      <p>Google's sign-in page handles Google account sign-in. GAuth receives an OAuth access token and reads the account email through the Drive API. The email is stored locally to identify the connected account and support subsequent authorization requests to Google. Access tokens are stored in browser session storage and sent only to Google's authorization and Drive services.</p>
+      <p>After you set a backup passphrase and use manual or automatic backup, accounts and groups, including account labels and linked websites, are encrypted on your device using a key derived from that passphrase (PBKDF2-SHA256 and AES-GCM), then uploaded over HTTPS. The backup passphrase and decryption key are not sent to Google. Drive also receives metadata such as the backup filename, time, account count and device type; that metadata is separate from the encrypted account content.</p>
+      <p>You can disconnect in GAuth or revoke access at <a href="https://myaccount.google.com/permissions">your Google Account permissions page</a>. You can keep or delete cloud backup files in your Drive.</p>
       <p>GAuth's use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
-
-      <h3>Autofill on web pages</h3>
-      <p>To fill codes into verification fields, GAuth detects such fields on the pages you visit. It passes only the one-time code to the page, never the secret, and it does not read, record or upload page content. Pressing Enter after filling is a local action that can be turned off in Settings and involves no additional data transfer.</p>
-
-      <h3>Camera and screenshots</h3>
-      <p>The camera, or a screenshot of the current tab, is used only when you choose “Scan with camera” or “Scan QR code on this page”. Recognition happens on your device; images are neither stored nor uploaded.</p>
-
-      <h3>Screen lock</h3>
-      <p>GAuth locks itself when your computer locks or after a period of inactivity. It reads only the system's active / idle / locked state and neither records nor uploads it.</p>
-
+      <p>User data is used only for GAuth's disclosed authenticator features and their security, in accordance with the <a href="https://developer.chrome.com/docs/webstore/program-policies/user-data-faq">Chrome Web Store User Data Policy</a> and its Limited Use restrictions.</p>
+      <h3>Autofill, camera and screenshots</h3>
+      <p>GAuth reads the current tab's URL/domain to match accounts locally. It also identifies open web tabs when applying newly granted site access. With your site permission or temporary current-tab access from a shortcut or context-menu action, it reads the page structure, labels and attributes needed to identify verification fields. Only the one-time code is filled into the page; the full 2FA secret and unlock passcode are not passed to the page. If automatic submission is enabled, GAuth triggers the website's own form submission so the site can process the code as part of sign-in. You can turn this option off in Settings.</p>
+      <p>GAuth does not read the browser's history list or build a chronological browsing log. Website associations you confirm are stored in the encrypted account vault and may be included in encrypted cloud backups. Page structure and screenshots are not sent to the developers or Drive.</p>
+      <p>Camera frames, QR images you select and current-tab screenshots are used only for the scanning feature you choose. Recognition happens on your device; images are not persistently saved or uploaded. Account details and secrets you confirm importing from a QR code are stored and backed up as account data described above.</p>
+      <h3>Activity used for automatic locking</h3>
+      <p>When you interact with GAuth's interface, it updates a last-activity timestamp in session storage to support idle locking. It also processes the computer's lock state when that option is enabled. GAuth does not record typed content, individual click or scroll records, or mouse paths, and does not send this activity information to external services.</p>
       <h3>Changes and contact</h3>
-      <p>Changes to this policy will be posted on this page with a new effective date. For questions, please open an issue on <a href="https://github.com/baowangxiangmu111-create/GAuth/issues">GitHub Issues</a>.</p>
+      <p>Changes to this policy will be posted on this page with a new effective date. Contact: <a href="https://github.com/baowangxiangmu111-create/GAuth/issues">GitHub Issues</a>.</p>
     </section>
   </article>
 
   <article data-lang="fr" lang="fr" data-title="Politique de confidentialité · GAuth">
     <h1>Politique de confidentialité</h1>
-    <p class="lead">Date d’entrée en vigueur : 1er novembre 2026</p>
+    <p class="lead">Date d’entrée en vigueur : 7 novembre 2026</p>
 
     <section class="card">
       <h2>Présentation</h2>
-      <p>GAuth est une extension de navigateur qui génère des codes d’authentification à deux facteurs. GAuth n’a aucun serveur. Elle ne collecte pas vos données, ne les vend pas et ne les partage avec aucun tiers. Elle ne contient ni publicité ni code de mesure d’audience.</p>
+      <p>GAuth traite les données décrites ci-dessous pour gérer vos comptes d’authentification, générer des codes sur votre appareil et les saisir sur les pages web. GAuth ne dispose d’aucun serveur de collecte de données, et ses développeurs ne reçoivent ni votre coffre de comptes, ni vos clés secrètes, ni le contenu des pages. GAuth ne vend pas vos données et ne contient ni publicité ni outils d’analyse d’utilisation. Lorsque vous activez la sauvegarde dans le cloud, les sauvegardes chiffrées sont envoyées directement vers votre propre Google Drive.</p>
 
       <h3>Données stockées sur votre appareil</h3>
       <ul>
-        <li>Les comptes que vous ajoutez (émetteur, nom du compte, clé secrète 2FA), les groupes et les réglages sont stockés chiffrés dans l’espace de stockage de l’extension.</li>
-        <li>Si vous définissez un code de déverrouillage, les clés secrètes ne restent en mémoire que tant que GAuth est déverrouillée.</li>
-        <li>Ces données restent sur votre appareil et sont supprimées lorsque vous désinstallez l’extension.</li>
+        <li>Les comptes que vous ajoutez ou importez (émetteur, nom du compte ou adresse e-mail, clé secrète 2FA, compteur et sites associés), les groupes et les préférences des comptes sont stockés dans un coffre chiffré avec AES-GCM sur votre appareil. Les réglages de l’interface sont stockés séparément dans le stockage local de l’extension.</li>
+        <li>Si vous définissez un code de déverrouillage, il protège la clé du coffre et n’est pas stocké en clair. La clé du coffre déverrouillé est mise en cache dans le stockage de session du navigateur ; ce cache est supprimé lorsque vous verrouillez GAuth.</li>
+        <li>La désinstallation de GAuth ou l’effacement de ses données locales supprime le stockage de l’extension. Les fichiers que vous exportez et les sauvegardes dans le cloud ne sont pas supprimés automatiquement.</li>
       </ul>
 
       <h3>Compte Google et Google Drive (facultatif)</h3>
-      <p>Uniquement lorsque vous choisissez « Connecter un compte Google », GAuth demande une seule autorisation :</p>
+      <p>L’autorisation interactive ne commence que lorsque vous choisissez de connecter votre compte Google. GAuth demande une seule autorisation :</p>
       <ul>
         <li><code>https://www.googleapis.com/auth/drive.file</code> : accès aux seuls fichiers créés par GAuth, c’est-à-dire le dossier « GAuth 备份 » de votre Drive et les fichiers de sauvegarde qu’il contient. GAuth ne voit aucun autre fichier de votre Drive.</li>
       </ul>
-      <p>Une fois connectée, GAuth lit l’adresse e-mail du compte via l’API Drive, uniquement pour afficher dans l’extension le compte connecté.</p>
-      <p>Les sauvegardes sont chiffrées sur votre appareil avec une phrase secrète que vous choisissez (PBKDF2-SHA256 et AES-GCM) avant l’envoi. Seul le texte chiffré est stocké dans votre Drive ; ni les développeurs de GAuth ni Google ne peuvent le déchiffrer. Les jetons d’accès restent dans la mémoire de session du navigateur et ne sont jamais envoyés ailleurs que chez Google.</p>
-      <p>Vous pouvez vous déconnecter à tout moment dans GAuth, ou révoquer l’accès depuis <a href="https://myaccount.google.com/permissions">la page des autorisations de votre compte Google</a>. Les fichiers de sauvegarde de votre Drive vous appartiennent : vous les conservez ou les supprimez.</p>
+      <p>La page de connexion de Google gère la connexion au compte Google. GAuth reçoit un jeton d’accès OAuth et lit l’adresse e-mail du compte via l’API Drive. Cette adresse est stockée localement pour identifier le compte connecté et faciliter les demandes d’autorisation ultérieures auprès de Google. Les jetons d’accès sont conservés dans le stockage de session du navigateur et ne sont envoyés qu’aux services d’autorisation et de stockage Drive de Google.</p>
+      <p>Après la définition d’une phrase secrète de sauvegarde, les sauvegardes manuelles ou automatiques chiffrent sur votre appareil les comptes et les groupes, y compris leurs libellés et sites associés, avec une clé dérivée de cette phrase secrète (PBKDF2-SHA256 et AES-GCM), puis les envoient par HTTPS. La phrase secrète de sauvegarde et la clé de déchiffrement ne sont pas envoyées à Google. Drive reçoit aussi des métadonnées, notamment le nom du fichier, la date, le nombre de comptes et le type d’appareil ; ces métadonnées sont distinctes du contenu chiffré des comptes.</p>
+      <p>Vous pouvez vous déconnecter dans GAuth ou révoquer l’accès depuis <a href="https://myaccount.google.com/permissions">la page des autorisations de votre compte Google</a>. Vous pouvez conserver ou supprimer les fichiers de sauvegarde dans votre Drive.</p>
       <p>L’utilisation et le transfert par GAuth des informations reçues des API Google respectent les <a href="https://developers.google.com/terms/api-services-user-data-policy">règles sur les données utilisateur des services d’API Google</a>, y compris les exigences d’utilisation limitée.</p>
+      <p>Les données ne sont utilisées que pour les fonctions d’authentification déclarées de GAuth et leur sécurité, conformément aux <a href="https://developer.chrome.com/docs/webstore/program-policies/user-data-faq">règles relatives aux données utilisateur du Chrome Web Store</a> et à leurs restrictions d’utilisation limitée.</p>
 
       <h3>Remplissage automatique sur les pages web</h3>
-      <p>Pour remplir les champs de code de vérification, GAuth détecte ces champs sur les pages que vous visitez. Elle ne transmet à la page que le code à usage unique, jamais la clé secrète, et ne lit, n’enregistre ni n’envoie le contenu des pages. L’appui sur Entrée après le remplissage est une action locale, désactivable dans les réglages, qui n’entraîne aucun transfert de données.</p>
+      <p>GAuth lit l’URL ou le domaine de l’onglet actif pour rechercher les comptes correspondants localement. Elle identifie aussi les onglets web déjà ouverts lors de l’application d’une nouvelle autorisation d’accès aux sites. Avec votre autorisation d’accès au site, ou un accès temporaire à l’onglet obtenu par un raccourci ou le menu contextuel, elle lit la structure, les libellés et les attributs nécessaires pour reconnaître les champs de vérification. Seul le code à usage unique est saisi sur la page ; la clé secrète 2FA complète et le code de déverrouillage ne sont pas transmis à la page. Si l’envoi automatique est activé, GAuth déclenche l’envoi du formulaire du site, qui traite le code dans le cadre de la connexion. Cette option peut être désactivée dans les réglages.</p>
+      <p>GAuth ne lit pas la liste d’historique du navigateur et ne crée pas de journal chronologique de navigation. Les associations entre comptes et sites que vous confirmez sont enregistrées dans le coffre chiffré et peuvent faire partie des sauvegardes chiffrées dans le cloud. La structure des pages et les captures d’écran ne sont envoyées ni aux développeurs ni à Drive.</p>
+
+      <h3>Activité utilisée pour le verrouillage automatique</h3>
+      <p>Lorsque vous utilisez l’interface de GAuth, l’extension met à jour un horodatage de dernière activité dans le stockage de session afin de permettre le verrouillage après inactivité. Elle traite aussi l’état de verrouillage de l’ordinateur lorsque cette option est activée. GAuth n’enregistre ni le contenu saisi, ni des relevés de clics ou de défilements, ni les déplacements de la souris, et n’envoie pas ces informations d’activité à des services externes.</p>
 
       <h3>Caméra et captures d’écran</h3>
-      <p>La caméra, ou une capture de l’onglet actif, n’est utilisée que lorsque vous choisissez « Scanner avec la caméra » ou « Scanner le code QR de la page ». La reconnaissance se fait sur votre appareil ; les images ne sont ni conservées ni envoyées.</p>
-
-      <h3>Verrouillage</h3>
-      <p>GAuth se verrouille lorsque votre ordinateur se verrouille ou après une période d’inactivité. Elle ne lit que l’état actif / inactif / verrouillé fourni par le système, sans l’enregistrer ni l’envoyer.</p>
+      <p>Les images de la caméra, les images de codes QR que vous sélectionnez et les captures de l’onglet actif ne sont utilisées que pour la fonction de lecture que vous choisissez. La reconnaissance se fait sur votre appareil ; les images ne sont ni conservées durablement ni envoyées. Les comptes et clés secrètes dont vous confirmez l’importation depuis un code QR sont stockés et sauvegardés comme les données de compte décrites ci-dessus.</p>
 
       <h3>Modifications et contact</h3>
       <p>Toute modification de cette politique sera publiée sur cette page avec une nouvelle date d’entrée en vigueur. Pour toute question, ouvrez un ticket sur <a href="https://github.com/baowangxiangmu111-create/GAuth/issues">GitHub Issues</a>.</p>
